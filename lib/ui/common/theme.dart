@@ -7,11 +7,12 @@ ThemeData kAppTheme = ThemeData(
   accentColor: ColorPallete.secondaryColor,
   textTheme: kTextTheme,
   appBarTheme: AppBarTheme(
-    brightness: Brightness.dark,
-    backgroundColor: ColorPallete.accentColor,
+    backgroundColor: ColorPallete.backgroundColor,
+    
     iconTheme: IconThemeData(
       color: Colors.white,
     ),
+    elevation: 0,
   ),
   primaryTextTheme: kTextTheme,
   elevatedButtonTheme: ElevatedButtonThemeData(
