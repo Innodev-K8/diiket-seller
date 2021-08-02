@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Diiket Driver',
+      title: 'Diiket Seller',
       debugShowCheckedModeBanner: false,
       theme: kAppTheme,
       initialRoute: HomePage.route,
