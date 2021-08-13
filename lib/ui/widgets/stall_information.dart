@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:seller/ui/common/styles.dart';
+import 'package:seller/ui/widgets/inputs/big_switch.dart';
 
 class StallInformation extends StatelessWidget {
   const StallInformation({Key? key}) : super(key: key);
@@ -39,9 +40,11 @@ class StallInformation extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  "Geser jika diperlukan untuk menutup/buka toko pada waktu tertentu.",
+                  "Atur status buka/tutup toko dengan tombol di bawah.",
                   style: kTextTheme.headline6!.copyWith(fontSize: 12),
                 ),
+                SizedBox(height: 10.0),
+                BigSwitch()
               ],
             ),
           ),
@@ -57,3 +60,4 @@ class StallInformation extends StatelessWidget {
     );
   }
 }
+
