@@ -51,7 +51,6 @@ class BigSwitch extends HookWidget {
             ),
             Positioned.fill(
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Expanded(
@@ -61,7 +60,9 @@ class BigSwitch extends HookWidget {
 
                         onToggle?.call(false);
                       },
-                      child: Center(
+                      child: Container(
+                        color: Colors.transparent,
+                        alignment: Alignment.center,
                         child: Text(
                           'Tutup',
                           style: TextStyle(
@@ -79,7 +80,9 @@ class BigSwitch extends HookWidget {
 
                         onToggle?.call(true);
                       },
-                      child: Center(
+                      child: Container(
+                        color: Colors.transparent,
+                        alignment: Alignment.center,
                         child: Text(
                           'Buka',
                           style: TextStyle(
