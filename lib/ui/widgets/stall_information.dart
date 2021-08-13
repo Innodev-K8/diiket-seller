@@ -17,27 +17,40 @@ class StallInformation extends StatelessWidget {
               Color(0xffFFB945),
             ]),
       ),
-      child: Column(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Text(
-                "Toko Hari Ini",
-                style: kTextTheme.headline3!
-                    .copyWith(color: ColorPallete.backgroundColor),
-              ),
-              IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.info_outline_rounded,
-                    color: ColorPallete.backgroundColor,
-                  ))
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      "Toko Hari Ini",
+                      style: kTextTheme.headline3!
+                          .copyWith(color: ColorPallete.backgroundColor),
+                    ),
+                    SizedBox(width: 8.0),
+                    Icon(
+                      Icons.info_outline_rounded,
+                      color: ColorPallete.backgroundColor,
+                    ),
+                  ],
+                ),
+                Text(
+                  "Geser jika diperlukan untuk menutup/buka toko pada waktu tertentu.",
+                  style: kTextTheme.headline6!.copyWith(fontSize: 12),
+                ),
+              ],
+            ),
           ),
-          Text(
-            "Geser jika diperlukan untuk menutup/buka toko pada waktu tertentu.",
-            style: kTextTheme.headline6!.copyWith(fontSize: 12),
+          SizedBox(width: 20.0),
+          CircleAvatar(
+            radius: 35 / 2,
+            backgroundImage: NetworkImage(
+              'https://preview.keenthemes.com/metronic-v4/theme/assets/pages/media/profile/profile_user.jpg',
+            ),
           ),
         ],
       ),
