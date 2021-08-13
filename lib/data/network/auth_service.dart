@@ -17,11 +17,9 @@ class AuthService {
 
   Future<AuthResponse> loginWithEmailPassword(
     String email,
-    String password,
-    [
+    String password, [
     String? fcmToken,
-  ]
-  ) async {
+  ]) async {
     try {
       final response = await _dio.post(
         _('login'),
@@ -46,24 +44,39 @@ class AuthService {
     }
   }
 
-  Future<AuthResponse> loginWithFirebaseToken(String token) async {
+  Future<AuthResponse> loginWithFirebaseToken(String token,
+      [String? fcmToken]) async {
     try {
+      print('login with fcmtoken: $fcmToken');
+      
       final response = await _dio.post(
         _('login/firebase'),
         data: {
           'firebase_token': token,
           'device_name': 'mobile',
+          'signin_only': true,
+          if (fcmToken != null) 'fcm_token': fcmToken,
         },
       );
 
       final authResponse = AuthResponse.fromJson(response.data);
 
-      if (authResponse.user?.type != UserType.driver) {
-        throw CustomException(code: 403, message: 'Kredensial salah');
+      if (authResponse.user?.type != UserType.seller) {
+        throw CustomException(
+          code: 403,
+          message: 'Nomor tidak terdaftar sebagai pedagang.',
+        );
       }
 
       return authResponse;
     } on DioError catch (error) {
+      if (error.response?.statusCode == 401) {
+        throw CustomException(
+          code: 401,
+          message: 'Nomor tidak terdaftar.',
+        );
+      }
+
       throw CustomException.fromDioError(error);
     }
   }
@@ -76,13 +89,13 @@ class AuthService {
     }
   }
 
-  Future<User> me() async {
+  Future<User?> me() async {
     try {
       final response = await _dio.get(_('me'));
 
       return User.fromJson(response.data['data']);
-    } on DioError catch (error) {
-      throw CustomException.fromDioError(error);
+    } catch (_) {
+      return null;
     }
   }
 

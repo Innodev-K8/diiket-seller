@@ -1,9 +1,10 @@
 import 'dart:async';
-import 'package:seller/data/notification/notification_topic.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:diiket_models/all.dart';
 import 'package:seller/data/network/auth_service.dart';
 import 'package:seller/data/providers/firebase_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import 'package:seller/data/repositories/firebase_auth_repository.dart';
 
 import 'token_provider.dart';
 
@@ -12,6 +13,7 @@ final authLoadingProvider = StateProvider<bool>((_) => true);
 final authProvider = StateNotifierProvider<AuthState, User?>((ref) {
   return AuthState(
     ref.read(authServiceProvider),
+    ref.read(firebaseAuthRepositoryProvider),
     ref.read,
   );
 });
@@ -19,14 +21,37 @@ final authProvider = StateNotifierProvider<AuthState, User?>((ref) {
 final authExceptionProvider = StateProvider<CustomException?>((_) => null);
 
 class AuthState extends StateNotifier<User?> {
-  AuthService _authService;
-  Reader _read;
+  final FirebaseAuthRepository _firebaseAuthRepository;
+  final AuthService _authService;
+  final Reader _read;
 
   AuthState(
     this._authService,
+    this._firebaseAuthRepository,
     this._read,
   ) : super(null) {
     this.refreshProfile();
+  }
+
+   Future<void> signInWithPhoneCredential(
+      firebase_auth.PhoneAuthCredential credential) async {
+    try {
+      if (_firebaseAuthRepository.getCurrentFirebaseUser() != null) {
+        await signOut();
+      }
+
+      // try to login using firebase
+      await _firebaseAuthRepository.signInWithPhoneCredential(credential);
+
+      // login to laravel using the firebase user
+      final loggedUser = _firebaseAuthRepository.getCurrentFirebaseUser();
+
+      if (loggedUser != null) {
+        return await _signInWithFirebaseUser(loggedUser);
+      }
+    } on CustomException catch (error) {
+      _read(authExceptionProvider).state = error;
+    }
   }
 
   // Komunikasi ke laravel
@@ -42,11 +67,21 @@ class AuthState extends StateNotifier<User?> {
     }
   }
 
+  Future<void> updateDeviceToken(String token) async {
+    try {
+      await _authService.updateProfile({
+        'fcm_token': token,
+      });
+
+      await refreshProfile();
+    } on CustomException catch (error) {
+      _read(authExceptionProvider).state = error;
+    }
+  }
+
   Future<void> refreshProfile() async {
     try {
       state = await _authService.me();
-
-      await subscribeToMarketSellerNotificationTopic(state);
     } on CustomException catch (error) {
       _read(authExceptionProvider).state = error;
     } finally {
@@ -54,24 +89,20 @@ class AuthState extends StateNotifier<User?> {
     }
   }
 
-  Future<void> signInWithEmailAndPassword(String email, String password) async {
+  Future<void> _signInWithFirebaseUser(firebase_auth.User user) async {
     try {
-      _read(authLoadingProvider).state = true;
-
-      final fcmToken = await _read(messagingProvider).getToken();
+      final String firebaseToken = await user.getIdToken();
+      final String? fcmToken = await _read(messagingProvider).getToken();
 
       final AuthResponse response =
-          await _authService.loginWithEmailPassword(email, password, fcmToken);
+          await _authService.loginWithFirebaseToken(firebaseToken, fcmToken);
 
-      // check for stall, if it's null, then the user is a seller
-      if (response.token != null && response.user?.stall != null) {
+      if (response.token != null && response.user != null) {
         await _read(tokenProvider.notifier).setToken(response.token!);
         await _read(crashlyticsProvider)
             .setUserIdentifier('${response.user!.id}#${response.user!.name}');
 
         state = response.user;
-
-        await subscribeToMarketSellerNotificationTopic(state);
       } else {
         await signOut();
       }
@@ -85,10 +116,10 @@ class AuthState extends StateNotifier<User?> {
   Future<void> signOut() async {
     try {
       _read(authLoadingProvider).state = true;
-
+      
+      await _firebaseAuthRepository.signOut();
       await _authService.logout().onError((error, stackTrace) => null);
       await _read(tokenProvider.notifier).clearToken();
-      await unSubscribeToMarketSellerNotificationTopic(state);
 
       state = null;
 

@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:seller/data/providers/auth/auth_provider.dart';
 import 'package:seller/ui/common/styles.dart';
 import 'package:seller/ui/widgets/inputs/big_switch.dart';
 
-class StallInformation extends StatelessWidget {
-  const StallInformation({Key? key}) : super(key: key);
-
+class StallInformation extends HookWidget {
   @override
   Widget build(BuildContext context) {
+    final user = useProvider(authProvider);
+
     return Container(
       padding: EdgeInsets.symmetric(vertical: 24, horizontal: 20),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: <Color>[
-              Color(0xffFF8527),
-              Color(0xffFFB945),
-            ]),
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: <Color>[
+            Color(0xffFF8527),
+            Color(0xffFFB945),
+          ],
+        ),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,7 +56,7 @@ class StallInformation extends StatelessWidget {
           CircleAvatar(
             radius: 35 / 2,
             backgroundImage: NetworkImage(
-              'https://preview.keenthemes.com/metronic-v4/theme/assets/pages/media/profile/profile_user.jpg',
+              user?.profile_picture_url ?? '',
             ),
           ),
         ],
@@ -60,4 +64,3 @@ class StallInformation extends StatelessWidget {
     );
   }
 }
-

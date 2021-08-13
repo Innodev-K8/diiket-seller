@@ -6,8 +6,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:seller/data/notification/background_fcm.dart';
 import 'package:seller/data/providers/firebase_provider.dart';
 import 'package:seller/ui/common/theme.dart';
+import 'package:seller/ui/pages/auth/login_page.dart';
 import 'package:seller/ui/pages/edit_page.dart';
 import 'package:seller/ui/pages/home_page.dart';
+import 'package:seller/ui/widgets/auth_wrapper.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,8 +35,14 @@ class MyApp extends StatelessWidget {
         ),
       ],
       routes: {
-        HomePage.route: (_) => HomePage(),
-        EditPage.route: (_) => EditPage(),
+        HomePage.route: (_) => AuthWrapper(
+              auth: (_) => HomePage(),
+              guest: () => LoginPage(),
+            ),
+        EditPage.route: (_) => AuthWrapper(
+              auth: (_) => EditPage(),
+              guest: () => LoginPage(),
+            ),
       },
     );
   }
