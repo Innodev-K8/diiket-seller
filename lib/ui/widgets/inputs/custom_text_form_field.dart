@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:seller/ui/common/styles.dart';
 
 class CustomTextFormField extends StatelessWidget {
-  
+  final String? initialValue;
   final String? hint;
   final int? minLines;
   final int? maxLines;
 
+  final Function(String?)? onChanged;
+
   const CustomTextFormField({
     Key? key,
+    this.initialValue,
+    this.onChanged,
     this.hint,
     this.minLines,
     this.maxLines,
@@ -37,6 +41,8 @@ class CustomTextFormField extends StatelessWidget {
       ),
       minLines: minLines,
       maxLines: maxLines,
+      initialValue: initialValue,
+      onChanged: onChanged,
     );
   }
 }

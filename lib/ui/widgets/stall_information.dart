@@ -1,8 +1,11 @@
+import 'package:diiket_models/all.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:seller/data/providers/auth/auth_provider.dart';
+import 'package:seller/data/providers/stall/stall_provider.dart';
 import 'package:seller/ui/common/styles.dart';
+import 'package:seller/ui/common/utils.dart';
 import 'package:seller/ui/widgets/inputs/big_switch.dart';
 
 class StallInformation extends HookWidget {
@@ -48,7 +51,26 @@ class StallInformation extends HookWidget {
                   style: kTextTheme.headline6!.copyWith(fontSize: 12),
                 ),
                 SizedBox(height: 10.0),
-                BigSwitch()
+                BigSwitch(
+                  initialValue: user?.stall?.is_open ?? false,
+                  onToggle: (isOpen) async {
+                    try {
+                      await context
+                          .read(stallProvider.notifier)
+                          .setStallOpenStatus(isOpen);
+
+                      Utils.alert(
+                        context,
+                        'Status toko berhasil diubah menjadi ${isOpen ? 'BUKA' : 'TUTUP'}',
+                      );
+                    } on CustomException catch (exception) {
+                      Utils.alert(
+                        context,
+                        'Terjadi kesalahan: ${exception.message}',
+                      );
+                    }
+                  },
+                )
               ],
             ),
           ),

@@ -33,6 +33,12 @@ class AuthState extends StateNotifier<User?> {
     this.refreshProfile();
   }
 
+  void updateUserStall(Stall stall) {
+    state = state?.copyWith(
+      stall: stall,
+    );
+  }
+
    Future<void> signInWithPhoneCredential(
       firebase_auth.PhoneAuthCredential credential) async {
     try {

@@ -7,18 +7,23 @@ class CustomTextFieldSection extends StatelessWidget {
   const CustomTextFieldSection({
     Key? key,
     required this.title,
-    this.inputHint,
     this.helpText,
+    this.inputInitialValue,
+    this.inputHint,
     this.inputMinLines,
     this.inputMaxLines,
+    this.onInputChanged,
   }) : super(key: key);
 
   final String title;
   final String? helpText;
 
+  final String? inputInitialValue;
   final String? inputHint;
   final int? inputMinLines;
   final int? inputMaxLines;
+
+  final Function(String?)? onInputChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +43,8 @@ class CustomTextFieldSection extends StatelessWidget {
           hint: inputHint,
           minLines: inputMinLines,
           maxLines: inputMaxLines,
+          initialValue: inputInitialValue,
+          onChanged: onInputChanged,
         ),
         if (helpText != null) ...[
           SizedBox(

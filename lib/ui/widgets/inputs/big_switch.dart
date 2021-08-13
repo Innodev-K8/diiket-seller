@@ -6,10 +6,12 @@ class BigSwitch extends HookWidget {
   const BigSwitch({
     Key? key,
     this.onToggle,
+    this.initialValue = false,
     this.height = 45.0,
     this.width = 195.0,
   }) : super(key: key);
 
+  final bool initialValue;
   final Function(bool)? onToggle;
 
   final double height;
@@ -18,7 +20,7 @@ class BigSwitch extends HookWidget {
   @override
   Widget build(BuildContext context) {
     // keep track of the state, on or off
-    final state = useState(true);
+    final state = useState(initialValue);
 
     return AnimatedContainer(
       duration: Duration(milliseconds: 500),
