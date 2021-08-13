@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:seller/ui/common/styles.dart';
 
-class ItemChecker extends HookWidget {
+class OrderItemChecker extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    final paymentStatus =
-        useState<OrderItemPaymentStatus>(OrderItemPaymentStatus.not_available);
+    final paymentStatus = useState<OrderItemPaymentStatus>(
+      OrderItemPaymentStatus.not_available,
+    );
 
     return Container(
       margin: EdgeInsets.fromLTRB(0, 11, 0, 11),
@@ -15,6 +16,16 @@ class ItemChecker extends HookWidget {
         children: [
           Row(
             children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.network(
+                  'https://www.seriouseats.com/thmb/hGmf-CklPEWYtGrsB1XIOfldngM=/1500x844/smart/filters:no_upscale()/__opt__aboutcom__coeus__resources__content_migration__serious_eats__seriouseats.com__2015__07__20210324-SouthernFriedChicken-Andrew-Janjigian-21-cea1fe39234844638018b15259cabdc2.jpg',
+                  width: 54,
+                  height: 54,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              SizedBox(width: 10),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -27,6 +38,7 @@ class ItemChecker extends HookWidget {
               ),
             ],
           ),
+          SizedBox(height: 8),
           Row(
             children: [
               Checkbox(

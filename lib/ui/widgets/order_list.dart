@@ -65,7 +65,7 @@ class OrderItem extends StatelessWidget {
           Divider(
             thickness: 1,
           ),
-          ItemChecker(),
+          OrderItemChecker(),
         ],
       ),
     );
