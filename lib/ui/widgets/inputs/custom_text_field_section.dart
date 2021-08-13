@@ -9,11 +9,16 @@ class CustomTextFieldSection extends StatelessWidget {
     required this.title,
     this.inputHint,
     this.helpText,
+    this.inputMinLines,
+    this.inputMaxLines,
   }) : super(key: key);
 
   final String title;
-  final String? inputHint;
   final String? helpText;
+
+  final String? inputHint;
+  final int? inputMinLines;
+  final int? inputMaxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +36,8 @@ class CustomTextFieldSection extends StatelessWidget {
         ),
         CustomTextFormField(
           hint: inputHint,
+          minLines: inputMinLines,
+          maxLines: inputMaxLines,
         ),
         if (helpText != null) ...[
           SizedBox(

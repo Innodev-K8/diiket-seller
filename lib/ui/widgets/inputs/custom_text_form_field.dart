@@ -2,19 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:seller/ui/common/styles.dart';
 
 class CustomTextFormField extends StatelessWidget {
+  
+  final String? hint;
+  final int? minLines;
+  final int? maxLines;
+
   const CustomTextFormField({
     Key? key,
     this.hint,
+    this.minLines,
+    this.maxLines,
   }) : super(key: key);
-
-  final String? hint;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       decoration: InputDecoration(
-        contentPadding: const EdgeInsets.symmetric(
+        contentPadding: EdgeInsets.symmetric(
           horizontal: 12,
+          vertical: minLines != null && minLines! > 1 ? 12 : 0,
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
@@ -29,6 +35,8 @@ class CustomTextFormField extends StatelessWidget {
         ),
         hintText: hint,
       ),
+      minLines: minLines,
+      maxLines: maxLines,
     );
   }
 }

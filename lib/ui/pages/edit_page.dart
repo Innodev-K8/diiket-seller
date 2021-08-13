@@ -26,7 +26,6 @@ class EditPage extends StatelessWidget {
                 Navigator.pop(context);
               },
               color: ColorPallete.darkGray,
-              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
             );
           },
         ),
@@ -35,7 +34,7 @@ class EditPage extends StatelessWidget {
         child: Column(
           children: [
             Image.network(
-              "https://www.ashfield.gov.uk/media/8d83e1451daddb6/hucknall-market.jpg?center=0.42619295422749437,0.49818970571954585&mode=crop&width=1200&height=630",
+              'https://www.ashfield.gov.uk/media/8d83e1451daddb6/hucknall-market.jpg?center=0.42619295422749437,0.49818970571954585&mode=crop&width=1200&height=630',
             ),
             Container(
               margin: EdgeInsets.all(24),
@@ -46,11 +45,9 @@ class EditPage extends StatelessWidget {
                     width: double.infinity,
                     height: 53,
                     child: OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                          primary: ColorPallete.primaryColor),
                       onPressed: () {},
                       child: Text(
-                        "Ubah foto lapak",
+                        'Ubah foto lapak',
                         style: kTextTheme.headline5,
                       ),
                     ),
@@ -59,26 +56,51 @@ class EditPage extends StatelessWidget {
                     height: 20,
                   ),
                   CustomTextFieldSection(
+                    title: 'Ubah Nama',
+                    inputHint: 'Masukan nama lapak Anda',
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  CustomTextFieldSection(
                     title: 'Ubah Deskripsi',
-                    inputHint: "Masukan deskripsi",
+                    inputHint: 'Masukan deskripsi',
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: CustomTextFieldSection(
+                          title: 'Lantai',
+                        ),
+                      ),
+                      SizedBox(width: 4),
+                      Expanded(
+                        child: CustomTextFieldSection(
+                          title: 'Blok',
+                        ),
+                      ),
+                      SizedBox(width: 4),
+                      Expanded(
+                        child: CustomTextFieldSection(
+                          title: 'Nomor',
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(
                     height: 20,
                   ),
                   CustomTextFieldSection(
-                    title: 'Ubah alamat',
-                    inputHint: "Masukan alamat",
+                    title: 'Detail Alamat',
+                    inputHint: 'Contoh: Depan teras BRI',
+                    inputMinLines: 3,
+                    inputMaxLines: 5,
                     helpText:
-                        "Lantai, block, nomer atau sesuaikan dengan alamat lapak anda.",
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  CustomTextFieldSection(
-                    title: 'Ubah Keterangan Alamat',
-                    inputHint: "Masukan keterangan alamat",
-                    helpText:
-                        "Perjelas detail atau ciri khas lapak untuk memudahkan driver mencari lapak anda.",
+                        'Perjelas detail atau ciri khas lapak untuk memudahkan driver mencari lapak anda.',
                   ),
                   SizedBox(
                     height: 20,
@@ -88,11 +110,11 @@ class EditPage extends StatelessWidget {
                     children: [
                       TextButton(
                         onPressed: () {},
-                        child: Text("Batal"),
+                        child: Text('Batal'),
                       ),
-                      ElevatedButton(
+                      OutlinedButton(
                         onPressed: () {},
-                        child: Text("Simpan"),
+                        child: Text('Simpan'),
                       )
                     ],
                   )
