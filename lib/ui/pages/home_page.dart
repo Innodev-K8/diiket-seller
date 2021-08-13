@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:seller/data/providers/auth/auth_provider.dart';
 import 'package:seller/data/providers/order/active_orders_provider.dart';
 import 'package:seller/ui/common/styles.dart';
 import 'package:seller/ui/pages/edit_page.dart';
@@ -27,6 +28,15 @@ class HomePage extends StatelessWidget {
           statusBarColor: Colors.transparent,
         ),
         actions: [
+          IconButton(
+            onPressed: () {
+              context.read(authProvider.notifier).signOut();
+            },
+            icon: Icon(
+              Icons.logout,
+              color: ColorPallete.darkGray,
+            ),
+          ),
           IconButton(
             onPressed: () {
               Navigator.pushNamed(context, EditPage.route);
