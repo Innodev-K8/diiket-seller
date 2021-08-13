@@ -22,8 +22,8 @@ class OrderList extends HookWidget {
           order: orders[index],
         ),
       ),
-      loading: () => SmallLoading(),
-      error: (error, stackTrace) => Text(error.toString()),
+      loading: () => Center(child: SmallLoading()),
+      error: (error, stackTrace) => Center(child: Text(error.toString())),
     );
   }
 }
