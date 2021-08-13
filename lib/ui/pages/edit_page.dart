@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:seller/ui/common/styles.dart';
+import 'package:seller/ui/widgets/inputs/custom_text_field_section.dart';
 
 class EditPage extends StatelessWidget {
   static String route = 'edit';
@@ -57,93 +58,27 @@ class EditPage extends StatelessWidget {
                   SizedBox(
                     height: 20,
                   ),
-                  Text(
-                    "Ubah Deskripsi",
-                    style: kTextTheme.headline3!
-                        .copyWith(color: ColorPallete.accentColor),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: ColorPallete.primaryColor,
-                          width: 2.0,
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: ColorPallete.lightGray,
-                        ),
-                      ),
-                      hintText: "Masukan deskripsi",
-                    ),
+                  CustomTextFieldSection(
+                    title: 'Ubah Deskripsi',
+                    inputHint: "Masukan deskripsi",
                   ),
                   SizedBox(
                     height: 20,
                   ),
-                  Text(
-                    "Ubah Alamat",
-                    style: kTextTheme.headline3!
-                        .copyWith(color: ColorPallete.accentColor),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: ColorPallete.primaryColor,
-                          width: 2.0,
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: ColorPallete.lightGray,
-                        ),
-                      ),
-                      hintText: "Masukan alamat",
-                    ),
-                  ),
-                  Text(
-                    "Lantai, block, nomer atau sesuaikan dengan alamat lapak anda.",
-                    style: kTextTheme.subtitle2!
-                        .copyWith(color: ColorPallete.lightGray),
+                  CustomTextFieldSection(
+                    title: 'Ubah alamat',
+                    inputHint: "Masukan alamat",
+                    helpText:
+                        "Lantai, block, nomer atau sesuaikan dengan alamat lapak anda.",
                   ),
                   SizedBox(
                     height: 20,
                   ),
-                  Text(
-                    "Ubah Keterangan Alamat",
-                    style: kTextTheme.headline3!
-                        .copyWith(color: ColorPallete.accentColor),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: ColorPallete.primaryColor,
-                          width: 2.0,
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: ColorPallete.lightGray,
-                        ),
-                      ),
-                      hintText: "Masukan keterangan alamat",
-                    ),
-                  ),
-                  Text(
-                    "Perjelas detail atau ciri khas lapak untuk memudahkan driver mencari lapak anda.",
-                    style: kTextTheme.subtitle2!
-                        .copyWith(color: ColorPallete.lightGray),
+                  CustomTextFieldSection(
+                    title: 'Ubah Keterangan Alamat',
+                    inputHint: "Masukan keterangan alamat",
+                    helpText:
+                        "Perjelas detail atau ciri khas lapak untuk memudahkan driver mencari lapak anda.",
                   ),
                   SizedBox(
                     height: 20,
