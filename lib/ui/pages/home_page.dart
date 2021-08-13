@@ -27,10 +27,7 @@ class HomePage extends StatelessWidget {
           actions: [
             IconButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => EditPage()),
-                );
+                Navigator.pushNamed(context, EditPage.route);
               },
               icon: Icon(
                 Icons.edit_rounded,

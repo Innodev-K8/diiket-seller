@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:seller/ui/common/styles.dart';
 
 class EditPage extends StatelessWidget {
@@ -70,7 +69,9 @@ class EditPage extends StatelessWidget {
                     decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                            color: ColorPallete.primaryColor, width: 2.0),
+                          color: ColorPallete.primaryColor,
+                          width: 2.0,
+                        ),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -95,7 +96,9 @@ class EditPage extends StatelessWidget {
                     decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                            color: ColorPallete.primaryColor, width: 2.0),
+                          color: ColorPallete.primaryColor,
+                          width: 2.0,
+                        ),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -125,7 +128,9 @@ class EditPage extends StatelessWidget {
                     decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                            color: ColorPallete.primaryColor, width: 2.0),
+                          color: ColorPallete.primaryColor,
+                          width: 2.0,
+                        ),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
