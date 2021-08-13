@@ -1,6 +1,8 @@
 import 'package:intl/intl.dart';
 
 abstract class Helper {
+  static final sortDateFormatter = DateFormat("d MMMM yyyy, HH:mm", "id_ID");
+  
   static NumberFormat currencyFormatter = NumberFormat.currency(
     locale: 'id_ID',
     symbol: '',

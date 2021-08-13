@@ -1,11 +1,16 @@
+import 'package:diiket_models/all.dart';
 import 'package:flutter/material.dart';
+import 'package:seller/ui/common/helper.dart';
 import 'package:seller/ui/common/styles.dart';
 
 import 'order_item_checker.dart';
 
 class OrderListItem extends StatelessWidget {
+  final Order order;
+
   const OrderListItem({
     Key? key,
+    required this.order,
   }) : super(key: key);
 
   @override
@@ -17,42 +22,57 @@ class OrderListItem extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CircleAvatar(
-                radius: 30,
-                backgroundImage: NetworkImage(
-                  'https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+              if (order.driver?.profile_picture_url != null) ...[
+                CircleAvatar(
+                  radius: 30,
+                  backgroundImage: NetworkImage(
+                    order.driver!.profile_picture_url!,
+                  ),
+                ),
+                SizedBox(width: 8.0),
+              ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Pesanan Baru",
+                      style: kTextTheme.headline5,
+                    ),
+                    Text("Driver : ${order.driver?.name}"),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.schedule,
+                          size: kTextTheme.overline!.fontSize,
+                        ),
+                        SizedBox(width: 4),
+                        if (order.confirmed_at != null)
+                          Text(
+                            Helper.sortDateFormatter
+                                .format(order.confirmed_at!),
+                            style: kTextTheme.overline,
+                          ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Pesanan Baru",
-                    style: kTextTheme.headline5,
-                  ),
-                  Text("Driver : Adecya Jalu"),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.schedule,
-                        size: kTextTheme.overline!.fontSize,
-                      ),
-                      SizedBox(width: 4),
-                      Text(
-                        "22 Jul; 08:30",
-                        style: kTextTheme.overline,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+              SizedBox(width: 8.0),
               ElevatedButton(onPressed: () {}, child: Text("Hubungi"))
             ],
           ),
           Divider(
             thickness: 1,
           ),
-          OrderItemChecker(),
+          ListView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: order.order_items?.length ?? 0,
+            itemBuilder: (context, index) => OrderItemChecker(
+              orderItem: order.order_items![index],
+            ),
+          ),
         ],
       ),
     );

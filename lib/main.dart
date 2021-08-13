@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:seller/data/notification/background_fcm.dart';
 import 'package:seller/data/providers/firebase_provider.dart';
 import 'package:seller/ui/common/theme.dart';
@@ -13,6 +14,8 @@ import 'package:seller/ui/widgets/auth_wrapper.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await initializeDateFormatting('id_ID');
 
   await Firebase.initializeApp();
 
@@ -38,10 +41,12 @@ class MyApp extends StatelessWidget {
         HomePage.route: (_) => AuthWrapper(
               auth: (_) => HomePage(),
               guest: () => LoginPage(),
+              showLoading: true,
             ),
         EditPage.route: (_) => AuthWrapper(
               auth: (_) => EditPage(),
               guest: () => LoginPage(),
+              showLoading: true,
             ),
       },
     );

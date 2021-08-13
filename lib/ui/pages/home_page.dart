@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:seller/data/providers/order/active_orders_provider.dart';
 import 'package:seller/ui/common/styles.dart';
 import 'package:seller/ui/pages/edit_page.dart';
 import 'package:seller/ui/widgets/order_list.dart';
 import 'package:seller/ui/widgets/stall_information.dart';
-
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 class HomePage extends StatelessWidget {
   static String route = 'home';
 
@@ -37,19 +38,27 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          StallInformation(),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 20),
-            child: Text(
-              "Penjualan",
-              style: kTextTheme.headline5,
-            ),
+      body: RefreshIndicator(
+        onRefresh: () =>
+            context.read(activeOrdersProvider.notifier).fetchActiveOrders(),
+        child: SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              StallInformation(),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 24, horizontal: 20),
+                child: Text(
+                  "Penjualan",
+                  style: kTextTheme.headline5,
+                ),
+              ),
+              OrderList(),
+            ],
           ),
-          OrderList(),
-        ],
+        ),
       ),
     );
   }
