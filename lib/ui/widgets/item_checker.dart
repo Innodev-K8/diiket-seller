@@ -1,21 +1,14 @@
+import 'package:diiket_models/all.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:seller/ui/common/styles.dart';
-import 'package:seller/ui/widgets/square_icon_button.dart';
 
-class ItemChecker extends StatefulWidget {
-  const ItemChecker({Key? key}) : super(key: key);
-
-  @override
-  _ItemCheckerState createState() => _ItemCheckerState();
-}
-
-class _ItemCheckerState extends State<ItemChecker> {
-  bool batal = false;
-  bool belum_bayar = false;
-  bool lunas = false;
-
+class ItemChecker extends HookWidget {
   @override
   Widget build(BuildContext context) {
+    final paymentStatus =
+        useState<OrderItemPaymentStatus>(OrderItemPaymentStatus.not_available);
+
     return Container(
       margin: EdgeInsets.fromLTRB(0, 11, 0, 11),
       child: Column(
@@ -39,33 +32,28 @@ class _ItemCheckerState extends State<ItemChecker> {
               Checkbox(
                 checkColor: ColorPallete.backgroundColor,
                 activeColor: ColorPallete.primaryColor,
-                value: batal,
+                value:
+                    paymentStatus.value == OrderItemPaymentStatus.not_available,
                 onChanged: (bool? value) {
-                  setState(() {
-                    batal = value!;
-                  });
+                  paymentStatus.value = OrderItemPaymentStatus.not_available;
                 },
               ),
-              Expanded(child: Text("Dibatalkan")),
+              Expanded(child: Text("Tidak Tersedia")),
               Checkbox(
                 checkColor: ColorPallete.backgroundColor,
                 activeColor: ColorPallete.primaryColor,
-                value: belum_bayar,
+                value: paymentStatus.value == OrderItemPaymentStatus.unpaid,
                 onChanged: (bool? value) {
-                  setState(() {
-                    belum_bayar = value!;
-                  });
+                  paymentStatus.value = OrderItemPaymentStatus.unpaid;
                 },
               ),
               Expanded(child: Text("Belum DIbayar")),
               Checkbox(
                 checkColor: ColorPallete.backgroundColor,
                 activeColor: ColorPallete.primaryColor,
-                value: lunas,
+                value: paymentStatus.value == OrderItemPaymentStatus.paid,
                 onChanged: (bool? value) {
-                  setState(() {
-                    lunas = value!;
-                  });
+                  paymentStatus.value = OrderItemPaymentStatus.paid;
                 },
               ),
               Expanded(child: Text("Lunas"))
