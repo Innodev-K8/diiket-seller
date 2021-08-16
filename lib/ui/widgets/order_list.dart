@@ -1,3 +1,4 @@
+import 'package:diiket_models/src/order.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -14,16 +15,24 @@ class OrderList extends HookWidget {
     final ordersState = useProvider(activeOrdersProvider);
 
     return ordersState.when(
-      data: (orders) => ListView.builder(
+      data: (orders) => _buildList(orders),
+      loading: () => Center(child: SmallLoading()),
+      error: (error, stackTrace) => Center(child: Text(error.toString())),
+    );
+  }
+
+  _buildList(List<Order> orders) {
+    if (orders.isEmpty) {
+      return Center(child: Text('Tidak ada pesanan untuk saat ini...'));
+    }
+
+    return ListView.builder(
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         itemCount: orders.length,
         itemBuilder: (context, index) => OrderListItem(
           order: orders[index],
         ),
-      ),
-      loading: () => Center(child: SmallLoading()),
-      error: (error, stackTrace) => Center(child: Text(error.toString())),
-    );
+      );
   }
 }
