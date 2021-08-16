@@ -25,7 +25,8 @@ class OrderList extends HookWidget {
     if (orders.isEmpty) {
       return Center(
         child: Text(
-          'Tidak ada pesanan untuk saat ini, tarik ke bawah untuk memperbarui data...',
+          'Tidak ada pesanan untuk saat ini.\nTarik ke bawah untuk memperbarui data...',
+          textAlign: TextAlign.center,
         ),
       );
     }

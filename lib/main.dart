@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:seller/data/notification/background_fcm.dart';
+import 'package:seller/data/notification/notification_service.dart';
 import 'package:seller/data/providers/firebase_provider.dart';
 import 'package:seller/ui/common/theme.dart';
 import 'package:seller/ui/pages/auth/login_page.dart';
@@ -24,7 +25,19 @@ Future<void> main() async {
   runApp(ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+
+    NotificationService().initializeNotificationHandler(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
