@@ -1,8 +1,10 @@
 import 'package:diiket_models/all.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:seller/data/providers/order/active_orders_provider.dart';
 import 'package:seller/ui/common/helper.dart';
 import 'package:seller/ui/common/styles.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class OrderItemChecker extends HookWidget {
   final OrderItem orderItem;
@@ -69,6 +71,11 @@ class OrderItemChecker extends HookWidget {
           SizedBox(height: 8),
           OrderItemChecklist(
             initialValue: orderItem.payment_status!,
+            onChange: (status) {
+              final orderNotifier = context.read(activeOrdersProvider.notifier);
+
+              orderNotifier.setOrderItemPaymentStatus(orderItem, status);
+            },
           )
         ],
       ),
@@ -80,9 +87,11 @@ class OrderItemChecklist extends HookWidget {
   const OrderItemChecklist({
     Key? key,
     this.initialValue = OrderItemPaymentStatus.not_available,
+    this.onChange,
   }) : super(key: key);
 
   final OrderItemPaymentStatus initialValue;
+  final Function(OrderItemPaymentStatus status)? onChange;
 
   @override
   Widget build(BuildContext context) {
@@ -98,6 +107,8 @@ class OrderItemChecklist extends HookWidget {
           value: paymentStatus.value == OrderItemPaymentStatus.not_available,
           onChanged: (bool? value) {
             paymentStatus.value = OrderItemPaymentStatus.not_available;
+
+            onChange?.call(paymentStatus.value);
           },
         ),
         Expanded(child: Text("Tidak Tersedia")),
@@ -107,6 +118,8 @@ class OrderItemChecklist extends HookWidget {
           value: paymentStatus.value == OrderItemPaymentStatus.unpaid,
           onChanged: (bool? value) {
             paymentStatus.value = OrderItemPaymentStatus.unpaid;
+
+            onChange?.call(paymentStatus.value);
           },
         ),
         Expanded(child: Text("Belum DIbayar")),
@@ -116,6 +129,8 @@ class OrderItemChecklist extends HookWidget {
           value: paymentStatus.value == OrderItemPaymentStatus.paid,
           onChanged: (bool? value) {
             paymentStatus.value = OrderItemPaymentStatus.paid;
+
+            onChange?.call(paymentStatus.value);
           },
         ),
         Expanded(child: Text("Lunas"))

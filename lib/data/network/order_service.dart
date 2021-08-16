@@ -26,6 +26,34 @@ class OrderService {
     }
   }
 
+  Future<void> setOrderItemPaymentStatus(
+    OrderItem orderItem,
+    OrderItemPaymentStatus paymentStatus,
+  ) async {
+    try {
+      late String statusString;
+
+      switch (paymentStatus) {
+        case OrderItemPaymentStatus.unpaid:
+          statusString = 'unpaid';
+          break;
+        case OrderItemPaymentStatus.paid:
+          statusString = 'paid';
+          break;
+        case OrderItemPaymentStatus.not_available:
+          statusString = 'not_available';
+          break;
+      }
+
+      await _dio.post(_('active/items/${orderItem.id}'), data: {
+        '_method': 'PATCH',
+        'payment_status': statusString,
+      });
+    } on DioError catch (error) {
+      throw CustomException.fromDioError(error);
+    }
+  }
+
   // Future<void> claimOrder(int orderId) async {
   //   try {
   //     await _dio.post(_('$orderId/claim'));

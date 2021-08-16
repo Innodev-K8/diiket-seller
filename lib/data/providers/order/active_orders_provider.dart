@@ -26,4 +26,14 @@ class ActiveOrdersState extends StateNotifier<AsyncValue<List<Order>>> {
       state = AsyncValue.error(e);
     }
   }
+
+  Future<void> setOrderItemPaymentStatus(
+    OrderItem orderItem,
+    OrderItemPaymentStatus paymentStatus,
+  ) {
+    return _read(orderServiceProvider).setOrderItemPaymentStatus(
+      orderItem,
+      paymentStatus,
+    );
+  }
 }
