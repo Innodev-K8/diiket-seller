@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:seller/data/audio_player_service.dart';
 import 'package:seller/data/providers/order/active_orders_provider.dart';
 
 class NotificationService {
@@ -47,6 +48,11 @@ class NotificationService {
         message.data['type'] == 'seller/order-cancelled') {
       // if the message is a new/cancelled order, refresh the list of orders
       await context.read(activeOrdersProvider.notifier).fetchActiveOrders();
+
+      // if it is a new order, play notification sound
+      if (message.data['type'] == 'seller/new-order') {
+        AudioPlayerService.playNewOrderNotification();
+      }
     }
   }
 }
