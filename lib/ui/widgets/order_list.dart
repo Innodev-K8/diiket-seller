@@ -23,7 +23,11 @@ class OrderList extends HookWidget {
 
   _buildList(List<Order> orders) {
     if (orders.isEmpty) {
-      return Center(child: Text('Tidak ada pesanan untuk saat ini...'));
+      return Center(
+        child: Text(
+          'Tidak ada pesanan untuk saat ini, tarik ke bawah untuk memperbarui data...',
+        ),
+      );
     }
 
     return ListView.builder(

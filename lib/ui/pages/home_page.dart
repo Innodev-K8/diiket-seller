@@ -61,7 +61,7 @@ class HomePage extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(vertical: 24, horizontal: 20),
                 child: Text(
-                  "Penjualan",
+                  "Pesanan",
                   style: kTextTheme.headline5,
                 ),
               ),
