@@ -1,7 +1,9 @@
 import 'package:diiket_models/all.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:seller/ui/common/helper.dart';
 import 'package:seller/ui/common/styles.dart';
+import 'package:seller/ui/common/utils.dart';
 
 import 'order_item_checker.dart';
 
@@ -59,7 +61,22 @@ class OrderListItem extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 8.0),
-              ElevatedButton(onPressed: () {}, child: Text("Hubungi"))
+              ElevatedButton(
+                child: Text("Hubungi"),
+                onPressed: () {
+                  if (order.driver?.phone_number != null) {
+                    Utils.prompt(
+                      context,
+                      description: 'Hubungi ${order.driver?.name}?',
+                      onConfirm: () {
+                        FlutterPhoneDirectCaller.callNumber(
+                          order.driver!.phone_number!,
+                        );
+                      },
+                    );
+                  }
+                },
+              )
             ],
           ),
           Divider(
