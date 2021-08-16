@@ -43,8 +43,9 @@ class NotificationService {
     BuildContext context,
     RemoteMessage message,
   ) async {
-    if (message.data['type'] == 'seller-new-order') {
-      // if the message is a new order, refresh the list of orders
+    if (message.data['type'] == 'seller/new-order' ||
+        message.data['type'] == 'seller/order-cancelled') {
+      // if the message is a new/cancelled order, refresh the list of orders
       await context.read(activeOrdersProvider.notifier).fetchActiveOrders();
     }
   }
