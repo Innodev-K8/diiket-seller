@@ -4,9 +4,13 @@ import 'package:seller/data/providers/auth/auth_provider.dart';
 import 'package:seller/data/providers/order/active_orders_provider.dart';
 import 'package:seller/ui/common/styles.dart';
 import 'package:seller/ui/pages/edit_page.dart';
+import 'package:seller/ui/pages/register_confirm.dart';
+import 'package:seller/ui/pages/register_data_diri.dart';
+import 'package:seller/ui/pages/register_lapak.dart';
 import 'package:seller/ui/widgets/order_list.dart';
 import 'package:seller/ui/widgets/stall_information.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 class HomePage extends StatelessWidget {
   static String route = 'home';
 
@@ -66,6 +70,31 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               OrderList(),
+              FloatingActionButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => RegisterDataDiri()));
+                },
+                child: Text("Diri"),
+              ),
+              FloatingActionButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => RegisterLapak()));
+                },
+                child: Text("Lapak"),
+              ),
+              FloatingActionButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => RegisterConfirm()));
+                },
+                child: Text("Confrim"),
+              ),
             ],
           ),
         ),
